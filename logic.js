@@ -656,7 +656,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const soundToggle = document.getElementById('sound-toggle');
   const soundToneSelect = document.getElementById('sound-tone-select');
-  const tmkHeaderLogo = document.getElementById('tmk-header-logo');
   const splashScreen = document.getElementById('splash-screen');
 
   const themeCards = document.querySelectorAll('.theme-card');
@@ -682,12 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { once: true });
   }
 
-  if (tmkHeaderLogo) {
-    tmkHeaderLogo.addEventListener('click', () => {
-      SoundEngine.playKeySound('fn');
-      openDrawer();
-    });
-  }
+  
 
   // Trạng thái ứng dụng (Application State)
   const state = {
