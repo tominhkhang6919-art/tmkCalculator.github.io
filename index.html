@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MÁY TÍNH TIỆN LỢI - Máy Tính Cận Hiện Đại</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600;1,700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="cyber-dark">
+  <!-- Màn hình chào Intro TMK calculator với hiệu ứng mở dần 1.5 giây -->
+  <div id="splash-screen" class="splash-screen" aria-label="TMK Calculator Intro">
+    <div class="splash-card">
+      <div class="splash-glow"></div>
+      <div class="splash-brand">
+        <!-- Chữ TMK viết hoa phong cách hiện đại -->
+        <div class="splash-tmk" aria-label="TMK">
+          <span class="tmk-letter" style="--order: 1">T</span>
+          <span class="tmk-letter" style="--order: 2">M</span>
+          <span class="tmk-letter" style="--order: 3">K</span>
+        </div>
+        <div class="splash-divider"></div>
+        <!-- Chữ calculator bên dưới phong cách nghệ thuật -->
+        <div class="splash-calc" aria-label="calculator">
+          <span class="calc-letter" style="--order: 1">c</span>
+          <span class="calc-letter" style="--order: 2">a</span>
+          <span class="calc-letter" style="--order: 3">l</span>
+          <span class="calc-letter" style="--order: 4">c</span>
+          <span class="calc-letter" style="--order: 5">u</span>
+          <span class="calc-letter" style="--order: 6">l</span>
+          <span class="calc-letter" style="--order: 7">a</span>
+          <span class="calc-letter" style="--order: 8">t</span>
+          <span class="calc-letter" style="--order: 9">o</span>
+          <span class="calc-letter" style="--order: 10">r</span>
+        </div>
+      </div>
+      <!-- Thanh thời gian hiệu ứng 1.5s -->
+      <div class="splash-progress-bar">
+        <div class="splash-progress-fill"></div>
+      </div>
+      <span class="splash-skip-hint">Chạm hoặc nhấn phím bất kỳ để bỏ qua</span>
+    </div>
+  </div>
+
+  <!-- Lớp phủ màn che khi mở Menu 3 gạch -->
+  <div id="drawer-overlay" class="drawer-overlay" aria-hidden="true"></div>
+
+  <!-- Sidebar / Drawer bên trái: Lịch sử, Giao diện, Âm thanh -->
+  <aside id="side-drawer" class="side-drawer" aria-label="Bảng điều khiển tiện ích">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <svg class="drawer-icon" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 3"/>
+        </svg>
+        <span>Menu Tiện Ích</span>
+      </div>
+      <button id="close-drawer-btn" class="icon-btn" aria-label="Đóng menu">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Tab điều hướng trong Drawer -->
+    <div class="drawer-tabs">
+      <button class="drawer-tab active" data-tab="tab-history">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        Lịch sử
+      </button>
+      <button class="drawer-tab" data-tab="tab-settings">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        Giao diện & Âm thanh
+      </button>
+    </div>
+
+    <!-- Nội dung Tab Lịch sử -->
+    <div id="tab-history" class="tab-content active">
+      <div class="history-actions">
+        <span class="history-count" id="history-count">0 phép tính</span>
+        <button id="clear-history-btn" class="text-btn danger-text">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Xóa lịch sử
+        </button>
+      </div>
+      <div id="history-list" class="history-list">
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" fill="none" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 3"/>
+          </svg>
+          <p>Chưa có lịch sử tính toán nào</p>
+          <small>Các phép tính sau khi bấm = sẽ lưu tại đây</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nội dung Tab Cài đặt (Màu nền, Âm thanh, Phím tắt) -->
+    <div id="tab-settings" class="tab-content">
+      <div class="settings-group">
+        <div class="group-title">Âm thanh gõ xoa dịu (432Hz)</div>
+        <div class="setting-item">
+          <div class="setting-info">
+            <span class="setting-label">Âm thanh êm dịu</span>
+            <span class="setting-desc">Tần số nhẹ nhàng xoa dịu đầu óc khi gõ phím</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="sound-toggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <span class="setting-label">Kiểu âm thanh</span>
+            <span class="setting-desc">Tùy chọn tông âm thư thái</span>
+          </div>
+          <select id="sound-tone-select" class="custom-select">
+            <option value="soothing">Dịu nhẹ (Calming Marimba)</option>
+            <option value="water">Giọt nước thanh thoát (Drop)</option>
+            <option value="bubble">Gõ phím cơ êm (Soft Thud)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="group-title">Màu sắc giao diện (Theme dịu mắt)</div>
+        <div class="theme-options">
+          <label class="theme-card active" data-theme="cyber-dark">
+            <input type="radio" name="theme-radio" value="cyber-dark" checked>
+            <div class="theme-preview cyber-dark-preview">
+              <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+            </div>
+            <span class="theme-name">Tối Hiện Đại (Mặc định)</span>
+          </label>
+
+          <label class="theme-card" data-theme="midnight-oled">
+            <input type="radio" name="theme-radio" value="midnight-oled">
+            <div class="theme-preview midnight-oled-preview">
+              <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+            </div>
+            <span class="theme-name">Đen Sâu OLED (Bảo vệ mắt)</span>
+          </label>
+
+          <label class="theme-card" data-theme="nordic-slate">
+            <input type="radio" name="theme-radio" value="nordic-slate">
+            <div class="theme-preview nordic-slate-preview">
+              <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+            </div>
+            <span class="theme-name">Xanh Đá Bắc Âu (Dịu mát)</span>
+          </label>
+
+          <label class="theme-card" data-theme="warm-mocha">
+            <input type="radio" name="theme-radio" value="warm-mocha">
+            <div class="theme-preview warm-mocha-preview">
+              <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+            </div>
+            <span class="theme-name">Cà Phê Ấm (Chống mỏi mắt)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="group-title">Phím tắt nhanh trên Laptop / PC</div>
+        <div class="shortcuts-list">
+          <div class="shortcut-item"><kbd>0</kbd>–<kbd>9</kbd> Nhập số</div>
+          <div class="shortcut-item"><kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> Phép toán</div>
+          <div class="shortcut-item"><kbd>Enter</kbd> hoặc <kbd>=</kbd> Tính kết quả</div>
+          <div class="shortcut-item"><kbd>Backspace</kbd> Xóa lùi (⌫)</div>
+          <div class="shortcut-item"><kbd>Esc</kbd> hoặc <kbd>Del</kbd> Xóa hết (AC)</div>
+          <div class="shortcut-item"><kbd>^</kbd> Lũy thừa / Mũ</div>
+          <div class="shortcut-item"><kbd>r</kbd> Căn bậc hai (√)</div>
+          <div class="shortcut-item"><kbd>!</kbd> Giai thừa</div>
+          <div class="shortcut-item"><kbd>a</kbd> Gọi lại Ans</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Vùng chứa Máy tính chính -->
+  <main class="calculator-app-wrapper">
+    <!-- Header trên cùng trang web theo đúng yêu cầu -->
+    <header class="app-top-header">
+      <div class="header-left">
+        <button id="menu-toggle-btn" class="icon-btn menu-btn" aria-label="Mở tiện ích và lịch sử" title="Lịch sử & Cài đặt">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+
+      <!-- Dòng chữ nổi bật ở trên cùng trang web -->
+      <h1 class="app-main-title">MÁY TÍNH TIỆN LỢI</h1>
+
+      <div class="header-right">
+        <!-- Logo chữ TMK calculator tinh tế bên góc phải thay thế nút âm thanh -->
+        <a href="https://tominhkhang6919-art.github.io/tominhkhang.github.io/" id="tmk-header-logo" class="tmk-brand-badge" title="Quay về trang chính"></a>
+          <div class="badge-content">
+            <span class="badge-tmk">TMK</span>
+            <span class="badge-calc">calculator</span>
+          </div>
+          <div class="badge-sparkle"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Thân máy tính chính (Calculator Container) -->
+    <section class="calculator-card" role="region" aria-label="Bàn phím máy tính">
+      
+      <!-- MÀN HÌNH MÁY TÍNH HIỆN ĐẠI (Multi-line Display) -->
+      <div class="calc-screen-container">
+        <!-- Huy hiệu trạng thái: Ans, Chế độ phân số/thập phân -->
+        <div class="screen-meta-bar">
+          <div class="meta-left">
+            <span id="ans-indicator" class="meta-badge hidden">ANS = <span id="ans-value-tag">0</span></span>
+            <span id="mode-badge" class="meta-badge subtle">GÓC: DEG</span>
+          </div>
+          <div class="meta-right">
+            <!-- Nút chuyển đổi Phân số / Thập phân S<=>D -->
+            <button id="format-toggle-btn" class="format-badge-btn" title="Chuyển đổi giữa Phân số và Thập phân (S⇔D)">
+              <span class="badge-icon">S⇔D</span>
+              <span id="current-format-label" class="badge-text">Phân số</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dòng nhập biểu thức chính (Có hiển thị vị trí con trỏ và highlight lỗi) -->
+        <div class="expression-wrapper">
+          <div id="expression-display" class="expression-display" tabindex="0" role="textbox" aria-label="Biểu thức đang nhập">
+            <!-- Render ký tự từng phần tử để định vị lỗi chính xác -->
+            <span class="char-stream" id="char-stream"><span class="cursor"></span></span>
+          </div>
+        </div>
+
+        <!-- Dòng xem trước kết quả trực tiếp (Live Preview) -->
+        <div class="preview-wrapper">
+          <span id="preview-result" class="preview-result"></span>
+        </div>
+
+        <!-- Dòng kết quả chính thức sau khi bấm dấu = -->
+        <div class="result-wrapper">
+          <div id="primary-result" class="primary-result" aria-live="polite">0</div>
+          <!-- Phân số phụ (nếu có dạng phân số) -->
+          <div id="fraction-subview" class="fraction-subview hidden">
+            <span class="fraction-label">Dạng phân số:</span>
+            <span id="fraction-value" class="fraction-value">1/2</span>
+          </div>
+        </div>
+
+        <!-- Hộp thông báo lỗi định vị & quá tải -->
+        <div id="error-banner" class="error-banner hidden" role="alert">
+          <div class="error-header">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span id="error-title" class="error-title">Lỗi biểu thức</span>
+          </div>
+          <div id="error-message" class="error-message"></div>
+          <div id="error-location-tag" class="error-location-tag"></div>
+        </div>
+      </div>
+
+      <!-- BÀN PHÍM CẬN HIỆN ĐẠI (Keypad Layout) -->
+      <div class="calc-keypad" id="calc-keypad">
+        
+        <!-- Hàng 1: Các phép toán nâng cao (Căn, Mũ, Giai thừa, Ngoặc) -->
+        <div class="keypad-row row-science">
+          <button class="calc-key key-func key-power" data-action="power" title="Lũy thừa xʸ (2 ô một bự một nhỏ)" data-key="^">
+            <span class="power-glyph">x<sup class="sup-box">□</sup></span>
+          </button>
+          <button class="calc-key key-func key-sqrt" data-action="sqrt" title="Căn bậc hai √" data-key="r">
+            <span>√</span>
+          </button>
+          <button class="calc-key key-func key-factorial" data-action="factorial" title="Giai thừa n!" data-key="!">
+            <span>x!</span>
+          </button>
+          <button class="calc-key key-func key-paren" data-action="insert" data-value="(" title="Mở ngoặc (" data-key="(">
+            <span>(</span>
+          </button>
+          <button class="calc-key key-func key-paren" data-action="insert" data-value=")" title="Đóng ngoặc )" data-key=")">
+            <span>)</span>
+          </button>
+        </div>
+
+        <!-- Hàng 2: Hàng điều khiển AC, Xóa lùi, Phần trăm, Chia -->
+        <div class="keypad-row">
+          <button class="calc-key key-danger key-ac" data-action="clear-all" title="Xóa toàn bộ màn hình (AC)" data-key="Escape">
+            <span>AC</span>
+          </button>
+          <button class="calc-key key-action key-backspace" data-action="backspace" title="Mũi tên: Xóa từng kí tự lùi một (⌫)" data-key="Backspace">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+              <line x1="18" y1="9" x2="12" y2="15"></line>
+              <line x1="12" y1="9" x2="18" y2="15"></line>
+            </svg>
+          </button>
+          <button class="calc-key key-op key-percent" data-action="percent" title="Phần trăm %" data-key="%">
+            <span>%</span>
+          </button>
+          <button class="calc-key key-op key-divide" data-action="operator" data-value="÷" title="Chia ÷" data-key="/">
+            <span>÷</span>
+          </button>
+        </div>
+
+        <!-- Hàng 3: 7, 8, 9, Nhân -->
+        <div class="keypad-row">
+          <button class="calc-key key-num" data-action="number" data-value="7" data-key="7"><span>7</span></button>
+          <button class="calc-key key-num" data-action="number" data-value="8" data-key="8"><span>8</span></button>
+          <button class="calc-key key-num" data-action="number" data-value="9" data-key="9"><span>9</span></button>
+          <button class="calc-key key-op key-multiply" data-action="operator" data-value="×" title="Nhân ×" data-key="*">
+            <span>×</span>
+          </button>
+        </div>
+
+        <!-- Hàng 4: 4, 5, 6, Trừ -->
+        <div class="keypad-row">
+          <button class="calc-key key-num" data-action="number" data-value="4" data-key="4"><span>4</span></button>
+          <button class="calc-key key-num" data-action="number" data-value="5" data-key="5"><span>5</span></button>
+          <button class="calc-key key-num" data-action="number" data-value="6" data-key="6"><span>6</span></button>
+          <button class="calc-key key-op key-minus" data-action="operator" data-value="-" title="Trừ -" data-key="-">
+            <span>−</span>
+          </button>
+        </div>
+
+        <!-- Hàng 5: 1, 2, 3, Cộng -->
+        <div class="keypad-row">
+          <button class="calc-key key-num" data-action="number" data-value="1" data-key="1"><span>1</span></button>
+          <button class="calc-key key-num" data-action="number" data-value="2" data-key="2"><span>2</span></button>
+          <button class="calc-key key-num" data-action="number" data-value="3" data-key="3"><span>3</span></button>
+          <button class="calc-key key-op key-plus" data-action="operator" data-value="+" title="Cộng +" data-key="+">
+            <span>+</span>
+          </button>
+        </div>
+
+        <!-- Hàng 6: 0, Dấu chấm, Ans, DẤU BẰNG NỔI BẬT NHẤT -->
+        <div class="keypad-row">
+          <button class="calc-key key-num key-zero" data-action="number" data-value="0" data-key="0">
+            <span>0</span>
+          </button>
+          <button class="calc-key key-num key-dot" data-action="dot" title="Dấu chấm thập phân (.)" data-key=".">
+            <span>.</span>
+          </button>
+          <button class="calc-key key-special key-ans" data-action="ans" title="Lưu/Gọi lại kết quả trước (Ans)" data-key="a">
+            <span>Ans</span>
+          </button>
+          <button class="calc-key key-equals" data-action="calculate" title="Thực hiện tính toán (=)" data-key="Enter">
+            <span>=</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer thanh trạng thái nhỏ dưới đáy máy tính -->
+      <footer class="calc-status-bar">
+        <span class="status-tip">
+          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <line x1="6" y1="8" x2="6" y2="8"></line>
+            <line x1="10" y1="8" x2="10" y2="8"></line>
+            <line x1="14" y1="8" x2="14" y2="8"></line>
+            <line x1="18" y1="8" x2="18" y2="8"></line>
+            <line x1="6" y1="12" x2="18" y2="12"></line>
+          </svg>
+          Hỗ trợ phím máy tính &amp; laptop
+        </span>
+        <button id="toggle-fraction-quick" class="quick-link">Xem phân số ⇄ số thập phân</button>
+      </footer>
+    </section>
+  </main>
+
+  <script src="logic.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,1642 @@
+/* ==========================================================================
+   MÁY TÍNH TIỆN LỢI - HỆ THỐNG GIAO DIỆN CẬN HIỆN ĐẠI
+   Nguyên lý thiết kế: Tối giản, hiện đại, màu sắc không cũ, tương phản cao, bảo vệ mắt.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BẢNG MÀU BIẾN THỂ (THEME VARIABLES)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Font chữ chuyên nghiệp */
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Hiệu ứng chuyển động mượt mà 60fps */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --radius-key: 14px;
+  --radius-card: 28px;
+}
+
+/* Theme mặc định: Tối Hiện Đại (Cyber Dark) - Màu than chì kết hợp ánh xanh mờ */
+body[data-theme="cyber-dark"] {
+  --bg-page: #0a0d14;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #151b29 0%, #0a0d14 80%);
+  --card-bg: rgba(18, 24, 38, 0.88);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(99, 102, 241, 0.07);
+
+  --screen-bg: rgba(10, 14, 22, 0.75);
+  --screen-border: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Phím số: Nền than xám mịn, chữ trắng tương phản */
+  --key-num-bg: #1c2436;
+  --key-num-hover: #263148;
+  --key-num-active: #151c2c;
+  --key-num-text: #f8fafc;
+  --key-num-border: rgba(255, 255, 255, 0.05);
+
+  /* Phím toán tử: Nền xanh slate indigo */
+  --key-op-bg: #28334d;
+  --key-op-hover: #344365;
+  --key-op-active: #20293e;
+  --key-op-text: #60a5fa;
+  --key-op-border: rgba(96, 165, 250, 0.15);
+
+  /* Phím tính năng khoa học (xʸ, √, !, ngoặc): Xám chì thanh lịch */
+  --key-fn-bg: #1e2637;
+  --key-fn-hover: #29344c;
+  --key-fn-active: #171d2b;
+  --key-fn-text: #cbd5e1;
+
+  /* Phím AC & Xóa lùi: Cảnh báo dịu mắt */
+  --key-danger-bg: #321c25;
+  --key-danger-hover: #442431;
+  --key-danger-active: #28151c;
+  --key-danger-text: #fb7185;
+
+  --key-action-bg: #292437;
+  --key-action-hover: #38314c;
+  --key-action-text: #e2e8f0;
+
+  /* Phím Ans */
+  --key-ans-bg: #1b2f3c;
+  --key-ans-hover: #243e4f;
+  --key-ans-text: #38bdf8;
+
+  /* Phím dấu bằng (=) NỔI BẬT NHẤT: Gradient sáng lung linh */
+  --key-equal-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --key-equal-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+  --key-equal-active: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #be185d 100%);
+  --key-equal-text: #ffffff;
+  --key-equal-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.55), 0 0 15px rgba(236, 72, 153, 0.3);
+
+  --accent-glow: #6366f1;
+  --drawer-bg: rgba(14, 19, 30, 0.96);
+}
+
+/* Theme 2: Đen Sâu OLED (Midnight OLED) - Tối giản sâu thẳm, tiết kiệm pin, sắc nét */
+body[data-theme="midnight-oled"] {
+  --bg-page: #000000;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #0d0d0d 0%, #000000 90%);
+  --card-bg: rgba(10, 10, 10, 0.95);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 25px 60px -15px rgba(0, 0, 0, 1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  --screen-bg: #050505;
+  --screen-border: rgba(255, 255, 255, 0.08);
+
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+
+  --key-num-bg: #141416;
+  --key-num-hover: #222226;
+  --key-num-active: #0c0c0e;
+  --key-num-text: #f4f4f5;
+  --key-num-border: rgba(255, 255, 255, 0.08);
+
+  --key-op-bg: #1f1f26;
+  --key-op-hover: #2c2c36;
+  --key-op-active: #16161b;
+  --key-op-text: #38bdf8;
+  --key-op-border: rgba(56, 189, 248, 0.2);
+
+  --key-fn-bg: #17171c;
+  --key-fn-hover: #24242c;
+  --key-fn-active: #101014;
+  --key-fn-text: #d4d4d8;
+
+  --key-danger-bg: #2c1216;
+  --key-danger-hover: #3d191f;
+  --key-danger-active: #1e0b0e;
+  --key-danger-text: #f43f5e;
+
+  --key-action-bg: #201e26;
+  --key-action-hover: #2f2c38;
+  --key-action-text: #e4e4e7;
+
+  --key-ans-bg: #10232c;
+  --key-ans-hover: #183340;
+  --key-ans-text: #06b6d4;
+
+  --key-equal-bg: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%);
+  --key-equal-hover: linear-gradient(135deg, #0369a1 0%, #1d4ed8 50%, #4338ca 100%);
+  --key-equal-active: #1e40af;
+  --key-equal-text: #ffffff;
+  --key-equal-shadow: 0 8px 25px -4px rgba(37, 99, 235, 0.5);
+
+  --accent-glow: #38bdf8;
+  --drawer-bg: rgba(8, 8, 8, 0.98);
+}
+
+/* Theme 3: Xanh Đá Bắc Âu (Nordic Slate) - Dịu mát, thanh thoát */
+body[data-theme="nordic-slate"] {
+  --bg-page: #0f172a;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 80%);
+  --card-bg: rgba(23, 33, 53, 0.9);
+  --card-border: rgba(148, 163, 184, 0.12);
+  --card-shadow: 0 25px 60px -15px rgba(2, 6, 23, 0.7);
+
+  --screen-bg: rgba(15, 23, 42, 0.85);
+  --screen-border: rgba(148, 163, 184, 0.1);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --key-num-bg: #223049;
+  --key-num-hover: #2d3f60;
+  --key-num-active: #192336;
+  --key-num-text: #ffffff;
+  --key-num-border: rgba(255, 255, 255, 0.05);
+
+  --key-op-bg: #2e4368;
+  --key-op-hover: #3a5482;
+  --key-op-active: #233452;
+  --key-op-text: #34d399;
+  --key-op-border: rgba(52, 211, 153, 0.2);
+
+  --key-fn-bg: #263550;
+  --key-fn-hover: #32466a;
+  --key-fn-active: #1c273b;
+  --key-fn-text: #cbd5e1;
+
+  --key-danger-bg: #40232d;
+  --key-danger-hover: #542d3a;
+  --key-danger-active: #2f1921;
+  --key-danger-text: #f87171;
+
+  --key-action-bg: #2e3b52;
+  --key-action-hover: #3d4f6e;
+  --key-action-text: #f1f5f9;
+
+  --key-ans-bg: #1c3d42;
+  --key-ans-hover: #265158;
+  --key-ans-text: #2dd4bf;
+
+  --key-equal-bg: linear-gradient(135deg, #059669 0%, #10b981 50%, #06b6d4 100%);
+  --key-equal-hover: linear-gradient(135deg, #047857 0%, #059669 50%, #0891b2 100%);
+  --key-equal-active: #047857;
+  --key-equal-text: #ffffff;
+  --key-equal-shadow: 0 8px 25px -4px rgba(16, 185, 129, 0.5);
+
+  --accent-glow: #10b981;
+  --drawer-bg: rgba(15, 23, 42, 0.98);
+}
+
+/* Theme 4: Cà Phê Ấm (Warm Mocha) - Tối dịu màu đất, chống mỏi mắt đêm */
+body[data-theme="warm-mocha"] {
+  --bg-page: #151110;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #221c1a 0%, #151110 85%);
+  --card-bg: rgba(32, 27, 25, 0.92);
+  --card-border: rgba(214, 180, 160, 0.1);
+  --card-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
+
+  --screen-bg: rgba(18, 15, 14, 0.85);
+  --screen-border: rgba(214, 180, 160, 0.08);
+
+  --text-primary: #fcf8f6;
+  --text-secondary: #c7b8af;
+  --text-muted: #8d7e76;
+
+  --key-num-bg: #2e2624;
+  --key-num-hover: #3d3330;
+  --key-num-active: #221c1b;
+  --key-num-text: #fdfbf9;
+  --key-num-border: rgba(255, 255, 255, 0.04);
+
+  --key-op-bg: #413532;
+  --key-op-hover: #534440;
+  --key-op-active: #322826;
+  --key-op-text: #fb923c;
+  --key-op-border: rgba(251, 146, 60, 0.2);
+
+  --key-fn-bg: #342b29;
+  --key-fn-hover: #443835;
+  --key-fn-active: #261f1d;
+  --key-fn-text: #e7ded9;
+
+  --key-danger-bg: #432222;
+  --key-danger-hover: #572c2c;
+  --key-danger-active: #311919;
+  --key-danger-text: #fca5a5;
+
+  --key-action-bg: #3a302e;
+  --key-action-hover: #4a3e3b;
+  --key-action-text: #f4eae4;
+
+  --key-ans-bg: #43392a;
+  --key-ans-hover: #574a37;
+  --key-ans-text: #fcd34d;
+
+  --key-equal-bg: linear-gradient(135deg, #d97706 0%, #ea580c 50%, #c2410c 100%);
+  --key-equal-hover: linear-gradient(135deg, #b45309 0%, #c2410c 50%, #9a3412 100%);
+  --key-equal-active: #9a3412;
+  --key-equal-text: #ffffff;
+  --key-equal-shadow: 0 8px 25px -4px rgba(234, 88, 12, 0.5);
+
+  --accent-glow: #ea580c;
+  --drawer-bg: rgba(25, 20, 19, 0.98);
+}
+
+/* --------------------------------------------------------------------------
+   1.5. MÀN HÌNH CHÀO TMK CALCULATOR (SPLASH INTRO 1.5S)
+   -------------------------------------------------------------------------- */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg-page);
+  background-image: var(--bg-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.55s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.splash-screen.splash-fade-out {
+  opacity: 0;
+  transform: scale(1.05);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 44px 36px 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 32px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.9),
+              0 0 50px rgba(99, 102, 241, 0.15);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  max-width: 420px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Ánh hào quang tỏa sáng nền */
+.splash-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(236, 72, 153, 0.15) 45%, transparent 70%);
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+.splash-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+/* CHỮ TMK: Viết hoa, phong cách hiện đại, hiển thị mở dần */
+.splash-tmk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-main);
+  font-weight: 900;
+  font-size: clamp(3.2rem, 11vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: 0.22em;
+  padding-left: 0.22em;
+  background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 35%, #818cf8 70%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 20px rgba(99, 102, 241, 0.5));
+}
+
+.tmk-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px) scale(0.85);
+  filter: blur(12px);
+  animation: tmkReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--order) * 0.14s);
+}
+
+@keyframes tmkReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.85);
+    filter: blur(12px);
+  }
+  70% {
+    filter: blur(0px);
+    transform: translateY(-4px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Đường phân cách ánh sáng nở rộng */
+.splash-divider {
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #818cf8, #ec4899, transparent);
+  border-radius: 2px;
+  margin: 8px 0 4px;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+  animation: expandLine 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: 0.35s;
+}
+
+@keyframes expandLine {
+  0% { width: 0; opacity: 0; }
+  50% { opacity: 1; }
+  100% { width: 180px; opacity: 0.9; }
+}
+
+/* CHỮ calculator: Bên dưới, phong cách nghệ thuật, mở dần mềm mại */
+.splash-calc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', 'Caveat', cursive, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 6.8vw, 2.5rem);
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #38bdf8 0%, #a78bfa 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(56, 189, 248, 0.4));
+  line-height: 1.2;
+}
+
+.calc-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-12px) scale(0.9);
+  filter: blur(8px);
+  animation: calcReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(0.42s + var(--order) * 0.075s);
+}
+
+@keyframes calcReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.85);
+    filter: blur(8px);
+  }
+  70% {
+    filter: blur(0px);
+    transform: translateY(2px) scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Thanh tiến trình đúng 1.5 giây */
+.splash-progress-bar {
+  width: 140px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #6366f1, #38bdf8, #ec4899);
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.8);
+  animation: fillProgress 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fillProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.splash-skip-hint {
+  margin-top: 14px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  position: relative;
+  z-index: 1;
+}
+
+.splash-card:hover .splash-skip-hint {
+  opacity: 1;
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   2. THIẾT LẬP NỀN & KHUNG TRANG CHỦ
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: var(--font-main);
+  background: var(--bg-page);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background var(--transition-normal), color var(--transition-normal);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 18px 12px;
+}
+
+/* Container máy tính chính */
+.calculator-app-wrapper {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   3. HEADER TRÊN CÙNG: DÒNG CHỮ "MÁY TÍNH TIỆN LỢI" & NÚT 3 GẠCH
+   -------------------------------------------------------------------------- */
+.app-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 6px;
+  user-select: none;
+}
+
+/* Nút 3 gạch bên trái */
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  transform: translateY(-1px);
+}
+
+.menu-btn:active {
+  transform: scale(0.95);
+}
+
+.hamburger-bar {
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* Dòng chữ: MÁY TÍNH TIỆN LỢI nổi bật trên cùng */
+.app-main-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 30%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* --------------------------------------------------------------------------
+   LOGO CHỮ TMK CALCULATOR TINH TẾ BÊN GÓC PHẢI (THAY THẾ NÚT ÂM THANH)
+   -------------------------------------------------------------------------- */
+.tmk-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.tmk-brand-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.4),
+              0 0 16px rgba(99, 102, 241, 0.25);
+}
+
+.tmk-brand-badge:active {
+  transform: scale(0.96);
+}
+
+.badge-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.05;
+}
+
+.badge-tmk {
+  font-family: var(--font-main);
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #ffffff 40%, var(--accent-glow) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge-calc {
+  font-family: 'Playfair Display', 'Caveat', cursive, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--accent-glow);
+  opacity: 0.95;
+}
+
+.badge-sparkle {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  box-shadow: 0 0 6px var(--accent-glow);
+  opacity: 0.8;
+  animation: pulseSparkle 2s infinite ease-in-out;
+}
+
+@keyframes pulseSparkle {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   4. THÂN MÁY TÍNH (CALCULATOR CARD)
+   -------------------------------------------------------------------------- */
+.calculator-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: background var(--transition-normal), border var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* --------------------------------------------------------------------------
+   5. MÀN HÌNH MÁY TÍNH HIỆN ĐẠI (DISPLAY SCREEN)
+   -------------------------------------------------------------------------- */
+.calc-screen-container {
+  background: var(--screen-bg);
+  border: 1px solid var(--screen-border);
+  border-radius: 20px;
+  padding: 16px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Thanh meta-bar trên màn hình: ANS, GÓC, Nút S<=>D */
+.screen-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+}
+
+.meta-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.meta-badge.subtle {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+#ans-indicator {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--key-ans-text);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Nút chuyển đổi S <=> D (Phân số / Số thập phân) */
+.format-badge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.format-badge-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.format-badge-btn .badge-icon {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent-glow);
+}
+
+/* Dòng nhập biểu thức chính (Expression display) */
+.expression-wrapper {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.expression-wrapper::-webkit-scrollbar {
+  height: 3px;
+}
+.expression-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+.expression-display {
+  font-family: var(--font-mono);
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  word-break: keep-all;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  outline: none;
+}
+
+.char-stream {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Từng ký tự trong biểu thức */
+.expr-char {
+  display: inline-block;
+  transition: color var(--transition-fast);
+  padding: 0 1px;
+}
+
+.expr-char.op-glyph {
+  color: var(--key-op-text);
+  font-weight: 600;
+  padding: 0 2px;
+}
+
+.expr-char.sup-glyph {
+  font-size: 0.72em;
+  vertical-align: super;
+  color: #38bdf8;
+}
+
+/* Con trỏ nhấp nháy */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.25em;
+  background-color: var(--accent-glow);
+  margin-left: 2px;
+  border-radius: 1px;
+  animation: cursorBlink 1s infinite ease-in-out;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Đánh dấu vị trí sai ngay trên biểu thức */
+.expr-char.error-highlight {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.2);
+  border-bottom: 2px dashed #ef4444;
+  border-radius: 3px;
+  animation: shakeChar 0.4s ease-in-out;
+}
+
+@keyframes shakeChar {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* Dòng xem trước trực tiếp (Live Preview) */
+.preview-wrapper {
+  min-height: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.preview-result {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  opacity: 0.85;
+  transition: all var(--transition-fast);
+}
+
+.preview-result.has-val::before {
+  content: "≈ ";
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+/* Dòng kết quả chính (Primary Result) */
+.result-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.primary-result {
+  font-family: var(--font-mono);
+  font-size: 2.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-align: right;
+  word-break: break-all;
+  line-height: 1.15;
+  max-width: 100%;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.primary-result.result-evaluated {
+  animation: popResult 0.25s var(--transition-spring);
+}
+
+@keyframes popResult {
+  0% { transform: scale(0.96); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Phân số phụ (hiển thị khi có thể quy về phân số) */
+.fraction-subview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.fraction-subview .fraction-value {
+  font-weight: 700;
+  color: var(--accent-glow);
+}
+
+/* Hộp thông báo lỗi định vị & Quá tải */
+.error-banner {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #fca5a5;
+  font-size: 0.82rem;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.error-banner.overload {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fde68a;
+}
+
+.error-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.error-message {
+  white-space: pre-line;
+  line-height: 1.4;
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.error-location-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   6. BÀN PHÍM CẬN HIỆN ĐẠI (KEYPAD)
+   -------------------------------------------------------------------------- */
+.calc-keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+}
+
+.keypad-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.keypad-row.row-science {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+/* Cấu trúc nút bấm cơ bản */
+.calc-key {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: var(--radius-key);
+  min-height: 54px;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.calc-key span, .calc-key svg {
+  pointer-events: none;
+}
+
+/* Hiệu ứng ấn nảy vật lý */
+.calc-key:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.35);
+}
+
+.calc-key:active, .calc-key.key-active {
+  transform: translateY(1px) scale(0.96);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 6.1. Phím số (0-9, .) */
+.key-num {
+  background: var(--key-num-bg);
+  color: var(--key-num-text);
+  border-color: var(--key-num-border);
+}
+
+.key-num:hover {
+  background: var(--key-num-hover);
+}
+
+.key-num:active, .key-num.key-active {
+  background: var(--key-num-active);
+}
+
+/* 6.2. Phím toán tử (+, -, ×, ÷, %) */
+.key-op {
+  background: var(--key-op-bg);
+  color: var(--key-op-text);
+  border-color: var(--key-op-border);
+  font-size: 1.35rem;
+}
+
+.key-op:hover {
+  background: var(--key-op-hover);
+}
+
+.key-op:active, .key-op.key-active {
+  background: var(--key-op-active);
+}
+
+/* 6.3. Phím khoa học hàng đầu: xʸ, √, !, (, ) */
+.key-func {
+  background: var(--key-fn-bg);
+  color: var(--key-fn-text);
+  min-height: 44px;
+  font-size: 1.05rem;
+}
+
+.key-func:hover {
+  background: var(--key-fn-hover);
+}
+
+.key-func:active, .key-func.key-active {
+  background: var(--key-fn-active);
+}
+
+/* Kí hiệu lũy thừa xʸ: 2 ô một bự, một nhỏ ở trên */
+.power-glyph {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sup-box {
+  font-size: 0.68em;
+  display: inline-block;
+  transform: translate(2px, -7px);
+  color: var(--key-op-text);
+  font-family: var(--font-mono);
+}
+
+/* 6.4. Phím AC & Xóa lùi (⌫) */
+.key-danger {
+  background: var(--key-danger-bg);
+  color: var(--key-danger-text);
+  border-color: rgba(251, 113, 133, 0.2);
+  font-weight: 700;
+}
+
+.key-danger:hover {
+  background: var(--key-danger-hover);
+}
+
+.key-danger:active, .key-danger.key-active {
+  background: var(--key-danger-active);
+}
+
+.key-action {
+  background: var(--key-action-bg);
+  color: var(--key-action-text);
+}
+
+.key-action:hover {
+  background: var(--key-action-hover);
+}
+
+/* 6.5. Phím Ans */
+.key-special.key-ans {
+  background: var(--key-ans-bg);
+  color: var(--key-ans-text);
+  border-color: rgba(56, 189, 248, 0.2);
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.key-special.key-ans:hover {
+  background: var(--key-ans-hover);
+}
+
+/* 6.6. DẤU BẰNG (=) NỔI BẬT NHẤT */
+.key-equals {
+  background: var(--key-equal-bg);
+  color: var(--key-equal-text);
+  box-shadow: var(--key-equal-shadow);
+  font-size: 1.6rem;
+  font-weight: 800;
+  border: none;
+}
+
+.key-equals:hover {
+  background: var(--key-equal-hover);
+  box-shadow: 0 10px 28px -2px rgba(99, 102, 241, 0.7);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.key-equals:active, .key-equals.key-active {
+  background: var(--key-equal-active);
+  transform: translateY(1px) scale(0.97);
+}
+
+/* --------------------------------------------------------------------------
+   7. FOOTER THANH TRẠNG THÁI DƯỚI ĐÁY MÁY TÍNH
+   -------------------------------------------------------------------------- */
+.calc-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.status-tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quick-link {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color var(--transition-fast);
+}
+
+.quick-link:hover {
+  color: var(--accent-glow);
+}
+
+/* --------------------------------------------------------------------------
+   8. SIDE DRAWER (MENU 3 GẠCH: LỊCH SỬ, THEME, ÂM THANH)
+   -------------------------------------------------------------------------- */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.drawer-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 85vw;
+  background: var(--drawer-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--card-border);
+  z-index: 101;
+  transform: translateX(-100%);
+  transition: transform var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.side-drawer.active {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.drawer-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.drawer-tabs {
+  display: flex;
+  padding: 10px 14px 0;
+  gap: 6px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.drawer-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.drawer-tab:hover {
+  color: var(--text-secondary);
+}
+
+.drawer-tab.active {
+  color: var(--accent-glow);
+  border-bottom-color: var(--accent-glow);
+}
+
+.tab-content {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tab-content.active {
+  display: flex;
+}
+
+/* Tab Lịch sử */
+.history-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+}
+
+.history-count {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.danger-text {
+  color: #f87171;
+}
+
+.danger-text:hover {
+  background: rgba(248, 113, 113, 0.12);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.history-item .hist-expr {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  word-break: break-all;
+}
+
+.history-item .hist-res {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-glow);
+  text-align: right;
+}
+
+.history-item .hist-time {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.empty-state small {
+  font-size: 0.8rem;
+}
+
+/* Tab Cài đặt (Theme, Âm thanh, Phím tắt) */
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.group-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 6px;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.setting-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.setting-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+/* Toggle Switch bo tròn (Pill Switch) */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+input:checked + .slider {
+  background-color: var(--accent-glow);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* Lựa chọn theme trực quan */
+.theme-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theme-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.theme-card.active {
+  border-color: var(--accent-glow);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-card input {
+  display: none;
+}
+
+.theme-preview {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.theme-preview .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.cyber-dark-preview { background: #0a0d14; border: 1px solid #1c2436; }
+.cyber-dark-preview .d1 { background: #1c2436; }
+.cyber-dark-preview .d2 { background: #60a5fa; }
+.cyber-dark-preview .d3 { background: #8b5cf6; }
+
+.midnight-oled-preview { background: #000000; border: 1px solid #222; }
+.midnight-oled-preview .d1 { background: #141416; }
+.midnight-oled-preview .d2 { background: #38bdf8; }
+.midnight-oled-preview .d3 { background: #2563eb; }
+
+.nordic-slate-preview { background: #0f172a; border: 1px solid #2e4368; }
+.nordic-slate-preview .d1 { background: #223049; }
+.nordic-slate-preview .d2 { background: #34d399; }
+.nordic-slate-preview .d3 { background: #10b981; }
+
+.warm-mocha-preview { background: #151110; border: 1px solid #413532; }
+.warm-mocha-preview .d1 { background: #2e2624; }
+.warm-mocha-preview .d2 { background: #fb923c; }
+.warm-mocha-preview .d3 { background: #ea580c; }
+
+.theme-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.custom-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.custom-select option {
+  background: #1e293b;
+  color: #fff;
+}
+
+/* Danh sách phím tắt */
+.shortcuts-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.shortcut-item {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.72rem;
+  color: var(--text-primary);
+}
+
+/* Tiện ích ẩn hiện */
+.hidden {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. THÍCH ỨNG THIẾT BỊ DI ĐỘNG & MÀN HÌNH NHỎ (RESPONSIVE)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  body {
+    padding: 8px 6px;
+  }
+
+  .calculator-card {
+    padding: 14px 12px;
+    border-radius: 22px;
+    gap: 12px;
+  }
+
+  .calc-screen-container {
+    padding: 12px 14px 10px;
+    border-radius: 16px;
+  }
+
+  .expression-display {
+    font-size: 1.35rem;
+  }
+
+  .primary-result {
+    font-size: 2rem;
+  }
+
+  .calc-key {
+    min-height: 48px;
+    font-size: 1.15rem;
+    border-radius: 12px;
+  }
+
+  .key-func {
+    min-height: 40px;
+    font-size: 0.95rem;
+  }
+
+  .app-main-title {
+    font-size: 1.05rem;
+  }
+}
+
